@@ -1,52 +1,62 @@
-import type { ActionArgs, LoaderArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
-import {
-  Form,
-  isRouteErrorResponse,
-  useLoaderData,
-  useRouteError,
-} from "@remix-run/react";
-import invariant from "tiny-invariant";
+import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import { gql, useQuery } from "@apollo/client";
+import { useParams } from "@remix-run/react";
 
-import { deleteNote, getNote } from "~/models/note.server";
-import { requireUserId } from "~/session.server";
+export default function CountryDetailsPage() {
+  const id = useParams();
 
-export const loader = async ({ params, request }: LoaderArgs) => {
-  const userId = await requireUserId(request);
-  invariant(params.noteId, "noteId not found");
+  const { loading, error, data } = useQuery(GET_COUNTRY, {
+    variables: { id: id.Id },
+  });
 
-  const note = await getNote({ id: params.noteId, userId });
-  if (!note) {
-    throw new Response("Not Found", { status: 404 });
-  }
-  return json({ note });
-};
+  if (loading) return <p className="w-full h-full">Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
 
-export const action = async ({ params, request }: ActionArgs) => {
-  const userId = await requireUserId(request);
-  invariant(params.noteId, "noteId not found");
+  return <CountryDetail data={data} />;
+}
 
-  await deleteNote({ id: params.noteId, userId });
-
-  return redirect("/notes");
-};
-
-export default function NoteDetailsPage() {
-  const data = useLoaderData<typeof loader>();
-
+export function CountryDetail({ data }: any) {
   return (
-    <div>
-      <h3 className="text-2xl font-bold">{data.note.title}</h3>
-      <p className="py-6">{data.note.body}</p>
-      <hr className="my-4" />
-      <Form method="post">
-        <button
-          type="submit"
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
-        >
-          Delete
-        </button>
-      </Form>
+    <div className="flex flex-col justify-center items-center">
+      <div className="w-full text-center text-[200px]  ">
+        {data.country.emoji}
+      </div>
+      <ul className="text-xs [&>li>span]:w-[100px] [&>li]:flex [&>li]:justify-center [&>li>span]:inline-block flex justify-center flex-col">
+        <li className="border-b hover:bg-slate-100">
+          <span className="text-blue-800">Name:</span>{" "}
+          <span>{data.country?.name}</span>
+        </li>
+        <li className="border-b hover:bg-slate-100">
+          <span className="text-blue-800">Native:</span>{" "}
+          <span>{data.country?.native}</span>
+        </li>
+        <li className="border-b hover:bg-slate-100">
+          <span className="text-blue-800">Currency:</span>{" "}
+          <span>{data.country?.currency}</span>{" "}
+        </li>
+        <li className="border-b hover:bg-slate-100">
+          <span className="text-blue-800">Language:</span>{" "}
+          <span>{data.country?.languages[0].name}</span>{" "}
+        </li>
+        <li className="mb-10 border-b hover:bg-slate-100">
+          <span className="text-blue-800">Code:</span>{" "}
+          <span>{data.country?.code}</span>{" "}
+        </li>
+        <li className="mb-5 border-b hover:bg-slate-100">
+          <span className="text-blue-800">States:</span>{" "}
+        </li>
+        <li className="flex justify-center flex-wrap">
+          {data.country.states.length !== 0 ? (
+            data.country.states.map((state: any) => (
+              <span className="!w-[200px] border p-3 mb-3 mr-3 text-center hover:bg-slate-100">
+                {state.name}
+              </span>
+            ))
+          ) : (
+            <p>There is no States...</p>
+          )}
+        </li>
+      </ul>
     </div>
   );
 }
@@ -68,3 +78,23 @@ export function ErrorBoundary() {
 
   return <div>An unexpected error occurred: {error.statusText}</div>;
 }
+
+export const GET_COUNTRY = gql`
+  query GetCountry($id: ID!) {
+    country(code: $id) {
+      name
+      native
+      emoji
+      currency
+      languages {
+        name
+      }
+      code
+      phone
+      emojiU
+      states {
+        name
+      }
+    }
+  }
+`;

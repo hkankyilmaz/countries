@@ -15,7 +15,7 @@ export default function Index() {
             <div className="absolute inset-0">
               <img
                 className="h-full w-full object-cover"
-                src="https://user-images.githubusercontent.com/1500684/157774694-99820c51-8165-4908-a031-34fc371ac0d6.jpg"
+                src="https://i.pinimg.com/736x/32/84/f6/3284f67617f37d1f40e11c1ade3c5bbf.jpg"
                 alt="Sonic Youth On Stage"
               />
               <div className="absolute inset-0 bg-[color:rgba(254,204,27,0.5)] mix-blend-multiply" />
