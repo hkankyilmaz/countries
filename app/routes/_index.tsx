@@ -30,29 +30,27 @@ export default function Index() {
                 This project was prepated by @hakankarayilmaz
               </p>
               <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
-                {user ? (
+                <Link
+                  to="/countries"
+                  className="flex sm:w-[150px] items-center justify-center rounded-md mr-4 max-sm:mb-4 max-sm:w-full border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50"
+                >
+                  Quest
+                </Link>
+
+                <div className="space-y-4  sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
                   <Link
-                    to="/countries"
-                    className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
+                    to="/join"
+                    className="flex items-center sm:w-[150px] justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
                   >
-                    View Countries App
+                    Sign up
                   </Link>
-                ) : (
-                  <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">
-                    <Link
-                      to="/join"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8"
-                    >
-                      Sign up
-                    </Link>
-                    <Link
-                      to="/login"
-                      className="flex items-center justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600"
-                    >
-                      Log In
-                    </Link>
-                  </div>
-                )}
+                  <Link
+                    to="/login"
+                    className="flex items-center sm:w-[150px] justify-center rounded-md bg-yellow-500 px-4 py-3 font-medium text-white hover:bg-yellow-600"
+                  >
+                    Log In
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

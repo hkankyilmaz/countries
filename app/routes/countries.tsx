@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Link, Outlet } from "@remix-run/react";
 import type { Country } from "~/graphql/__generated__/graphql";
-import { useUser } from "~/utils";
+import { useOptionalUser } from "~/utils";
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from "@remix-run/react";
 
@@ -12,7 +12,7 @@ export default function CountryPage() {
 
   const param = useParams();
   const navigate = useNavigate();
-  const user = useUser();
+  const user = useOptionalUser();
 
   const { loading, error, data } = useQuery(GET_ALL_COUNTRIES);
 
@@ -52,7 +52,7 @@ export default function CountryPage() {
         <h1 className="text-xl font-bold">
           <Link to=".">Countries</Link>
         </h1>
-        <p className="text-sm">{user.email}</p>
+        <p className="text-sm">{user?.email ? user.email : "Quest"}</p>
         <Form action="/logout" method="post">
           <button
             type="submit"
