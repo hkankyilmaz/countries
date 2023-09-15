@@ -3,6 +3,9 @@
 🔸 You can see all countries information. <br>
 🔸 This web app built with using [Remix.js](https://remix.run/). <br>
 
+Firstly, You should fork/download repo to your github/pc after than
+open the app with VS Code and follow the below commands...
+
 ## 💻 Setup <br>
 
 ### Install Dependencies
