@@ -36,5 +36,7 @@ npm run build
 
 ## 📷 Screenshot <hr>
 
+<img src="./app/asset/ph1.png">
+<br>
 <img src="./app/asset/ph.png">
 <br>
