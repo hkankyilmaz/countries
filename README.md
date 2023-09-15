@@ -6,6 +6,9 @@
 Firstly, You should fork/download repo to your github/pc after than
 open the app with VS Code and follow the below commands...
 
+If You will faced any problem about Prisma SQLite You should reset the prisma db via
+prisma CLI.
+
 ## 💻 Setup <br>
 
 ### Install Dependencies
